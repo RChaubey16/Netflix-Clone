@@ -24,7 +24,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
       const request = await axios.get(fetchUrl);
 
       // here we are just checking what data is coming back from the requested URL
-      console.log(request.data.results);
+      //   console.log(request.data.results);
       setMovies(request.data.results);
       return request;
     }
@@ -32,7 +32,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
   }, [fetchUrl]);
   // you have to mention the fetchUrl as it is out of the useEffect block and is one the dependencies of useEffect Hook
 
-  console.table(movies);
+  //   console.table(movies);
 
   return (
     <div className="row">
