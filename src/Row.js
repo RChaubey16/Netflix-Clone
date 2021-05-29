@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "./axios";
 import "./Row.css";
-// import requests from './requests';
+import YouTube from "react-youtube";
+import movieTrailer from "movie-trailer";
 
 const baseurl = "https://image.tmdb.org/t/p/original/";
 
@@ -11,6 +12,7 @@ const baseurl = "https://image.tmdb.org/t/p/original/";
 function Row({ title, fetchUrl, isLargeRow }) {
   // Using State
   const [movies, setMovies] = useState([]);
+  const [trailerUrl, setTrailerUrl] = useState("");
 
   // A snippet of code which runs based on a specific condition/variable
   // By using this Hook, you tell React that your component needs to do something after render
@@ -32,13 +34,36 @@ function Row({ title, fetchUrl, isLargeRow }) {
   }, [fetchUrl]);
   // you have to mention the fetchUrl as it is out of the useEffect block and is one the dependencies of useEffect Hook
 
+  const opts = {
+    height: "390",
+    width: "100%",
+    playerVars: {
+      autoplay: 1,
+    },
+  };
+
+  const handleClick = (movie) => {
+    console.log(movie);
+    if (trailerUrl) {
+      // if video is already opened and you click the movie it will clear the trailerUrl and set it to empty and we get the functionality where when you click the movie twice the video disappears
+      setTrailerUrl("");
+    } else {
+      movieTrailer(movie?.name || "")
+        .then((url) => {
+          // https://www.youtube.com/watch?v=XtMThy8QKqU&t=8360s
+          // the below code will get us the 'v' of the above link which is the unique id of each video
+          const urlParams = new URLSearchParams(new URL(url).search);
+          setTrailerUrl(urlParams.get("v"));
+        })
+        .catch((error) => console.log(error));
+    }
+  };
   //   console.table(movies);
 
   return (
     <div className="row">
       {/* title */}
       <h2>{title}</h2>
-
       <div className="row__posters">
         {/* several row__poster(s) */}
 
@@ -47,6 +72,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
           <img
             //   using key we will give unique id to each movie and if in future they change then react will just rerender the change part and not the whole component
             key={movie.id}
+            onClick={() => handleClick(movie)}
             className={`row__poster ${isLargeRow && "row__posterLarge"}`}
             src={`${baseurl}${
               isLargeRow ? movie.poster_path : movie.backdrop_path
@@ -55,8 +81,9 @@ function Row({ title, fetchUrl, isLargeRow }) {
           ></img>
         ))}
       </div>
-
-      {/* container -> posters */}
+      {/* We need the trailers embedded underneath the row so here we add YouTube */}
+      {/* opts is the object styling given to the trailer (how the trailer will look on the app after popping up) */}
+      {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
     </div>
   );
 }
