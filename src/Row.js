@@ -6,7 +6,7 @@ import "./Row.css";
 import YouTube from "react-youtube";
 import movieTrailer from "movie-trailer";
 
-const baseurl = "https://image.tmdb.org/t/p/original/";
+const baseurl = "https://image.tmdb.org/t/p/original";
 
 // getting the title from the Row title mentioned in the App.js Row component call
 function Row({ title, fetchUrl, isLargeRow }) {
@@ -48,7 +48,7 @@ function Row({ title, fetchUrl, isLargeRow }) {
       // if video is already opened and you click the movie it will clear the trailerUrl and set it to empty and we get the functionality where when you click the movie twice the video disappears
       setTrailerUrl("");
     } else {
-      movieTrailer(movie?.name || "")
+      movieTrailer(movie?.title || "")
         .then((url) => {
           // https://www.youtube.com/watch?v=XtMThy8QKqU&t=8360s
           // the below code will get us the 'v' of the above link which is the unique id of each video
@@ -83,7 +83,10 @@ function Row({ title, fetchUrl, isLargeRow }) {
       </div>
       {/* We need the trailers embedded underneath the row so here we add YouTube */}
       {/* opts is the object styling given to the trailer (how the trailer will look on the app after popping up) */}
-      {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
+      <div style={{ padding: "40px" }}>
+        {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
+      </div>
+      {/* {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />} */}
     </div>
   );
 }

@@ -1,0 +1,53 @@
+Build Netflix Clone using React JS
+
+TMDB : themoviesdatabase
+
+webpages : tmdb, postman, firebase, videoCheckpoint: 2.19.10
+
+Steps too build the app
+
+
+1. Get the TMDB API key - 
+	So, to get the information all about the movies we will be using an API called TMDB. To access that API we would be needing 
+	an API key. So first we will get that API key. We will make a request to this API service and in response they will give us back a
+	bunch of data related to movies/series. It provides us with a very coll feature called genre-categorizing wherein you can get
+	the movies of a specific genre.	We just pull all that information and throw it in the front-end. 
+
+	API Key : 28e7009b302a72ec99ed5043e64a04ec
+	API Request : https://api.themoviedb.org/3/movie/550?api_key=28e7009b302a72ec99ed5043e64a04ec
+
+	Using Postman we can send a request to any sort of API or server. In response the API or server will send some details back which
+	we will be using in developing our app. In our case it returns back data related to movies and genres in form of JSON.
+
+2. create-react-app
+	command on VS Code terminal - 'create-react-app netflix-clone'.
+
+3. Setup Firebase Hosting
+	Firebase is suite of tools by Google. It allows you do a bunch of things like hosting a website, have a database, authentication
+	Firebase is used for backend and for our purpose we will be using firebase for deployment of the website.
+
+4. Get all the movies and build the rows
+	We have to use a third party app to handle sending the request from our code. Axios is the third party app. To install it just use th command 'npm i axios' in VS
+	terminal. We will be making the request using axios in our code. Using axios we will create requests to hit the API and fetch us all the information.
+
+	useEffect() is used run a piece of code when the component in which it is defined loads 
+	Ex. When the Row component loads I want to make a request to TMDB service and get back the entire info about movies and stuff and just use the image out of 
+	the receieved info 
+
+Note - The optional chaining (?.) is a safe way to access nested object properties, even if an intermediate property doesn't exist. In simple words, if you use (?.) instead of (.)
+ to access an object and that object is undefined or does not exist then rather than throwing an error, the app will anyhow access the undefined object preventing the overall
+app to get crashed.
+
+What makes a good front-end developer is very subtle things
+
+5. Build the Banner
+	Refer code for explanation Banner.js and Banner.css
+
+6. Build the Navbar
+	Refer code for explanation Nav.js and Nav.css
+7. Add Trailer PopUps
+	To get trailer popups to work we use 2 packges in React - 1. React Youtube (npm install react-youtube) 2. Movie Trailer(npm install movie-trailer)
+	Refer code for explanation Row.js
+8. Deploy to firebase
+	https://netflix-clone-ff76e.web.app 
+	Check this out!!!!!!
